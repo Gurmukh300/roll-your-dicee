@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   return runApp(
@@ -16,7 +17,23 @@ void main() {
   );
 }
 
-class DiceRoller extends StatelessWidget {
+class DiceRoller extends StatefulWidget {
+  const DiceRoller({super.key});
+
+  @override
+  State<DiceRoller> createState() => _DiceRollerState();
+}
+
+class _DiceRollerState extends State<DiceRoller> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+  void rollTheDice() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,13 +41,18 @@ class DiceRoller extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: TextButton(
-              onPressed: () {},
-              child: Image.asset('images/dice1.png'),
+              onPressed: () {
+                rollTheDice();
+              },
+              child: Image.asset('images/dice$leftDiceNumber.png'),
             ),
           ),
           Expanded(
             child: TextButton(
-                onPressed: () {}, child: Image.asset('images/dice1.png')),
+                onPressed: () {
+                  rollTheDice();
+                },
+                child: Image.asset('images/dice$rightDiceNumber.png')),
           ),
         ],
       ),
